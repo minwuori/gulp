@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<style type="text/css">
+.nav {
+    display: block;
+    list-style-type: disc;
+    padding-top: 40px;
+}
+
+    .nav__item {
+        display: inline-block;
+        border: 5px solid #009ddc;
+        padding: 0;
+        background: #fff;
+        color: #24387f;
+    }
+    
+    .nav__item:hover, .nav__item_selected {
+        color: #fff;
+        background-color: #009ddc;
+    }
+    
+    .nav__link {
+        display: inline-block;
+        text-decoration: none;
+        padding: 0.2em 3em 1em 1em;
+        color: #24387f;
+        font-size: larger;
+        font-weight: bold;
+    }	
+</style>
+<body>
+
+<ul class="nav">
+    <li class="nav__item">
+        <a class="nav__link" href="#x=123&y=100">Scroll to  x/y</a>
+    </li>
+    <li class="nav__item">
+        <a class="nav__link" href="#scrollTo=#scrollID">ScrollTo element selector (id)</a>
+    </li>
+    <li class="nav__item">
+        <a class="nav__link" href="#scrollTo=.class">ScrollTo element selector (class)</a>
+    </li>
+</ul>
+<script type="text/javascript">
+	$('.nav').on('click', '.nav__link', function() {
+    $('.nav__item_selected').removeClass('nav__item_selected');
+    $(this).closest('.nav__item').addClass('nav__item_selected');
+});
+
+	
+function decodeScrollPos(hide) {
+             var params = {}, el, loc = window.location, hash = loc.hash.substr(1);
+
+             hide && (loc.hash = "");
+
+             hash.split('&').forEach(function (raw) {
+                 var data = raw.split('=');
+                 data[0] && (params[data[0]] = data[1] || "");
+             })
+             setTimeout(function () {
+                 if (params.x || params.y) {
+                     console.log('scroll=', hash);
+                     window.scrollTo(params.x, params.y);
+                 } else if (params.scrollTo) {
+                     (el = document.querySelector(params.scrollTo)) && el.scrollIntoView && el.scrollIntoView(true);
+                 }
+             }, 100);
+             return params;
+         }
+
+
+         window.onhashchange = function () {
+             decodeScrollPos(true);
+         }
+
+         console.log(decodeScrollPos(true));
+</script>
+</body>
+</html>

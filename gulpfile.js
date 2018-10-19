@@ -51,7 +51,7 @@ gulp.task('css-libs', ['sass'], function() {
 
 gulp.task('watch', ['browser-sync', 'css-libs', 'scripts', 'pug'], function() {
     gulp.watch('src/ii/sass/**/*.sass', ['sass']); // Наблюдение за sass файлами в папке sass
-    gulp.watch('src/ii/*.html', browserSync.reload); // Наблюдение за HTML файлами в корне проекта
+    gulp.watch('src/**/*.html', browserSync.reload); // Наблюдение за HTML файлами в корне проекта
     gulp.watch('src/ii/js/**/*.js', browserSync.reload);   // Наблюдение за JS файлами в папке js
     gulp.watch('src/**/*.pug', ['pug']); // Наблюдение за pug файлами в папке src
 });
@@ -61,7 +61,7 @@ gulp.task('clean', function() {
 });
 
 gulp.task('pug', function() {
-    return gulp.src('src/pages/**.pug')
+    return gulp.src('src/pages/**/**.pug')
         .pipe(using({prefix:'Using file', path:'relative', color:'blue', filesize:true}))
         .pipe(plumber())
         .pipe(pug({ pretty: true }))
@@ -93,7 +93,7 @@ gulp.task('build', ['clean', 'img', 'sass', 'scripts'], function() {
     var buildJs = gulp.src('src/ii/js/**/*') // Переносим скрипты в продакшен
     .pipe(gulp.dest('dist/ii/js'))
 
-    var buildHtml = gulp.src(['src/pages/*.html', 'src/pages/*.pug']) // Переносим HTML в продакшен
+    var buildHtml = gulp.src(['src/**/*.html', 'src/**/*.pug']) // Переносим HTML в продакшен
     .pipe(gulp.dest('dist'));
 
 });

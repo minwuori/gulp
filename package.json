@@ -1,14 +1,14 @@
 {
-  "name": "test",
+  "name": "gulp",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "author": "web",
+  "author": "",
   "license": "ISC",
-  "description": "my first gulp project",
+  "description": "",
   "devDependencies": {
     "browser-sync": "^2.24.6",
     "del": "^3.0.0",

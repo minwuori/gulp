@@ -1,86 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-</head>
-
-<style type="text/css">
-.nav {
-    display: block;
-    list-style-type: disc;
-    padding-top: 40px;
-}
-
-    .nav__item {
-        display: inline-block;
-        border: 5px solid #009ddc;
-        padding: 0;
-        background: #fff;
-        color: #24387f;
-    }
+<html lang="ru">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <title></title>
+        <meta name="description" content=""/>
+        
+        <link href="/ii/css/project_name/style.css" rel="stylesheet" />       
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
     
-    .nav__item:hover, .nav__item_selected {
-        color: #fff;
-        background-color: #009ddc;
-    }
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=  '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);  })(window,document,'script', 'dataLayer','GTM-M569KV');</script>
     
-    .nav__link {
-        display: inline-block;
-        text-decoration: none;
-        padding: 0.2em 3em 1em 1em;
-        color: #24387f;
-        font-size: larger;
-        font-weight: bold;
-    }	
-</style>
+        <script src="https://vk.com/js/api/openapi.js?144"></script>
+
+    </head>
 <body>
+    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-M569KV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+    <script type="text/javascript">(function (d, w, c) {(w[c] = w[c] || []).push(function() {try {w.yaCounter6936841 = new Ya.Metrika({id:6936841,clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true,ecommerce:"dataLayer"});} catch(e) { }});var n = d.getElementsByTagName("script")[0],s = d.createElement("script"),f = function () { n.parentNode.insertBefore(s, n); };s.type = "text/javascript";s.async = true;s.src = "https://mc.yandex.ru/metrika/watch.js";if (w.opera == "[object Opera]") {d.addEventListener("DOMContentLoaded", f, false);} else { f(); }})(document, window, "yandex_metrika_callbacks");</script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/6936841" style="position:absolute; left:-9999px;" alt="" /></div> </noscript>
 
-<ul class="nav">
-    <li class="nav__item">
-        <a class="nav__link" href="#x=123&y=100">Scroll to  x/y</a>
-    </li>
-    <li class="nav__item">
-        <a class="nav__link" href="#scrollTo=#scrollID">ScrollTo element selector (id)</a>
-    </li>
-    <li class="nav__item">
-        <a class="nav__link" href="#scrollTo=.class">ScrollTo element selector (class)</a>
-    </li>
-</ul>
-<script type="text/javascript">
-	$('.nav').on('click', '.nav__link', function() {
-    $('.nav__item_selected').removeClass('nav__item_selected');
-    $(this).closest('.nav__item').addClass('nav__item_selected');
-});
-
-	
-function decodeScrollPos(hide) {
-             var params = {}, el, loc = window.location, hash = loc.hash.substr(1);
-
-             hide && (loc.hash = "");
-
-             hash.split('&').forEach(function (raw) {
-                 var data = raw.split('=');
-                 data[0] && (params[data[0]] = data[1] || "");
-             })
-             setTimeout(function () {
-                 if (params.x || params.y) {
-                     console.log('scroll=', hash);
-                     window.scrollTo(params.x, params.y);
-                 } else if (params.scrollTo) {
-                     (el = document.querySelector(params.scrollTo)) && el.scrollIntoView && el.scrollIntoView(true);
-                 }
-             }, 100);
-             return params;
-         }
+    <script>
+      VK.Retargeting.Init('VK-RTRG-645-i8bUm'); 
+      VK.Retargeting.Hit();
+    </script>
+    
 
 
-         window.onhashchange = function () {
-             decodeScrollPos(true);
-         }
-
-         console.log(decodeScrollPos(true));
-</script>
+    <script src="/ii/js/project_name/script.js" type="text/javascript"></script>
 </body>
 </html>

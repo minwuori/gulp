@@ -19,9 +19,7 @@ gulp.task('sass', function(){ // Создаем таск sass
     return gulp.src('src/ii/sass/**/*.sass') // Берем источник
         .pipe(sass()) // Преобразуем sass в CSS посредством gulp-sass
         .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true })) // Создаем префиксы
-        .pipe(gulp.dest(function(file){
-            return file.base;
-        })) // Выгружаем результата в папку src/css
+        .pipe(gulp.dest('src/ii/css/project_name')) // Выгружаем результата в папку src/css
         .pipe(browserSync.reload({stream: true})) // Обновляем CSS на странице при изменении
 });
 
@@ -41,19 +39,9 @@ gulp.task('scripts', function() {
         ])
         .pipe(concat('libs.min.js')) // Собираем их в кучу в новом файле libs.min.js
         .pipe(uglify()) // Сжимаем JS файл
-        .pipe(gulp.dest(function(file){
-            return file.base;
-        })); // Выгружаем в папку src/js
+        .pipe(gulp.dest('src/ii/js')); // Выгружаем в папку src/js
 });
 
-gulp.task('css-libs', ['sass'], function() {
-    return gulp.src('src/ii/css/**/*.css') // Выбираем файл для минификации
-        .pipe(cssnano()) // Сжимаем
-        .pipe(rename({suffix: '.min'})) // Добавляем суффикс .min
-        .pipe(gulp.dest(function(file){
-            return file.base;
-        })); // Выгружаем в папку src/css
-});
 
 gulp.task('pug', function() {
     return gulp.src('src/*.pug')
@@ -63,7 +51,7 @@ gulp.task('pug', function() {
         .pipe(gulp.dest('dist'))
 });
 
-gulp.task('watch', ['browser-sync', 'css-libs', 'scripts', 'pug'], function() {
+gulp.task('watch', ['browser-sync','sass', 'scripts', 'pug'], function() {
     gulp.watch('src/ii/sass/**/*.sass', ['sass']); // Наблюдение за sass файлами в папке sass
     gulp.watch('src/*.html', browserSync.reload); // Наблюдение за HTML файлами в корне проекта
     gulp.watch('src/ii/js/**/*.js', browserSync.reload);   // Наблюдение за JS файлами в папке js
@@ -75,7 +63,7 @@ gulp.task('clean', function() {
 });
 
 gulp.task('img', function() {
-    return gulp.src('src/ii/img/**/') // Берем все изображения из src
+    return gulp.src('src/ii/img/**/*') // Берем все изображения из src
         .pipe(cache(imagemin({  // Сжимаем их с наилучшими настройками с учетом кеширования
             interlaced: true,
             progressive: true,
@@ -89,14 +77,14 @@ gulp.task('build', ['clean', 'img', 'sass', 'scripts', 'pug'], function() {
 
     var buildCss = gulp.src([ // Переносим библиотеки в продакшен
         'src/ii/css/**/*.css',
-        'src/ii/css/**/libs.min.css'
+        'src/ii/css/**/*.min.css'
         ])
     .pipe(gulp.dest('dist/ii/css/'))
 
-    var buildFonts = gulp.src('src/ii/fonts/') // Переносим шрифты в продакшен
+    var buildFonts = gulp.src('src/ii/fonts/**/*') // Переносим шрифты в продакшен
     .pipe(gulp.dest('dist/ii/fonts'))
 
-    var buildJs = gulp.src('src/ii/js/**/*.js') // Переносим скрипты в продакшен
+    var buildJs = gulp.src('src/ii/js/**/*') // Переносим скрипты в продакшен
     .pipe(gulp.dest('dist/ii/js/'))
 
     var buildHtml = gulp.src('src/*.html') // Переносим HTML в продакшен

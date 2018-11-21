@@ -17,10 +17,20 @@ var gulp       = require('gulp'), // Подключаем Gulp
 
 gulp.task('sass', function(){ // Создаем таск sass
     return gulp.src('src/ii/sass/**/*.sass') // Берем источник
+        .pipe(using({prefix:'Using file', path:'relative', color:'yellow', filesize:true})) //отображение в консоли изменений 
         .pipe(sass()) // Преобразуем sass в CSS посредством gulp-sass
         .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true })) // Создаем префиксы
-        .pipe(gulp.dest('src/ii/css/project_name')) // Выгружаем результата в папку src/css
+        .pipe(gulp.dest('src/ii/css/project_name/')) // Выгружаем результата в папку src/css
         .pipe(browserSync.reload({stream: true})) // Обновляем CSS на странице при изменении
+});
+
+gulp.task('pug', function() {
+    return gulp.src('src/ii/*.pug')
+        .pipe(using({prefix:'Using file', path:'relative', color:'yellow', filesize:true})) //отображение в консоли изменений 
+        .pipe(plumber())
+        .pipe(pug({ pretty: true }))
+        .pipe(browserSync.reload({stream: true})) // Обновляем pug на странице при изменении
+        .pipe(gulp.dest('src'))
 });
 
 gulp.task('browser-sync', function() { // Создаем таск browser-sync
@@ -39,23 +49,15 @@ gulp.task('scripts', function() {
         ])
         .pipe(concat('libs.min.js')) // Собираем их в кучу в новом файле libs.min.js
         .pipe(uglify()) // Сжимаем JS файл
-        .pipe(gulp.dest('src/ii/js')); // Выгружаем в папку src/js
+        .pipe(gulp.dest('src/ii/js/')); // Выгружаем в папку src/js
 });
 
-
-gulp.task('pug', function() {
-    return gulp.src('src/*.pug')
-        .pipe(using({prefix:'Using file', path:'relative', color:'blue', filesize:true}))
-        .pipe(plumber())
-        .pipe(pug({ pretty: true }))
-        .pipe(gulp.dest('dist'))
-});
 
 gulp.task('watch', ['browser-sync','sass', 'scripts', 'pug'], function() {
     gulp.watch('src/ii/sass/**/*.sass', ['sass']); // Наблюдение за sass файлами в папке sass
     gulp.watch('src/*.html', browserSync.reload); // Наблюдение за HTML файлами в корне проекта
     gulp.watch('src/ii/js/**/*.js', browserSync.reload);   // Наблюдение за JS файлами в папке js
-    gulp.watch('src/*.pug', ['pug']); // Наблюдение за pug файлами в папке src
+    gulp.watch('src/ii/*.pug', ['pug']); // Наблюдение за pug файлами в папке src
 });
 
 gulp.task('clean', function() {
@@ -82,21 +84,17 @@ gulp.task('build', ['clean', 'img', 'sass', 'scripts', 'pug'], function() {
     .pipe(gulp.dest('dist/ii/css/'))
 
     var buildFonts = gulp.src('src/ii/fonts/**/*') // Переносим шрифты в продакшен
-    .pipe(gulp.dest('dist/ii/fonts'))
+    .pipe(gulp.dest('dist/ii/fonts/'))
 
     var buildJs = gulp.src('src/ii/js/**/*') // Переносим скрипты в продакшен
     .pipe(gulp.dest('dist/ii/js/'))
 
-    var buildHtml = gulp.src('src/*.html') // Переносим HTML в продакшен
-    .pipe(gulp.dest('dist'));
-
-    var buildPug = gulp.src('src/*.pug') // Переносим Pug в продакшен
-    .pipe(gulp.dest('dist'));
-
+    var buildHtml = gulp.src('src/**/*.html') // Переносим HTML в продакшен
+    .pipe(gulp.dest('dist/pages/'));
 });
 
 gulp.task('clear', function (callback) {
     return cache.clearAll();
 })
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['watch', 'browser-sync', 'pug']);
